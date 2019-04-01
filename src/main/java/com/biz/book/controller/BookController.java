@@ -27,17 +27,18 @@ public class BookController {
 	BookService bookService;
 
 	@RequestMapping(value="write", method=RequestMethod.GET)
-	public String writeBook(Model model, @ModelAttribute BookFormVO bookFormVO) {
+	public String writeBook(Model model, @ModelAttribute BookVO bookVO) {
 		
 		model.addAttribute("BODY", "WRITE");
+		model.addAttribute("SUBTITLE", "Write");
 		
 		return "home";
 	}
 	
 	@RequestMapping(value="write", method=RequestMethod.POST)
-	public String writeBook(Model model, @ModelAttribute @Valid BookFormVO bookFormVO, BindingResult result,MultipartHttpServletRequest request) {
+	public String writeBook(Model model, @ModelAttribute @Valid BookVO bookVO, BindingResult result, MultipartHttpServletRequest request) {
 		
-		int ret=bookService.insert(bookFormVO, request);
+		bookService.insert(bookVO, request);
 		
 		log.debug(result.getAllErrors().toString());
 		
@@ -57,9 +58,27 @@ public class BookController {
 	public String updateBook(Model model, @RequestParam long b_id, @ModelAttribute BookVO bookVO) {
 		
 		model.addAttribute("BODY", "UPDATE");
-		model.addAttribute("BOOK", bookService.findByID(b_id));
+		model.addAttribute("bookVO", bookService.findByID(b_id));
+		model.addAttribute("SUBTITLE", "Update");
 		
 		return "home";
+	}
+	
+	@RequestMapping(value="update", method=RequestMethod.POST)
+	public String updateBook(Model model, @ModelAttribute BookVO bookVO, BindingResult result, MultipartHttpServletRequest request) {
+		
+		bookService.update(bookVO, request);
+		log.debug(result.getAllErrors().toString());
+		
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value="delete", method=RequestMethod.GET)
+	public String deleteBook(Model model, @RequestParam long b_id) {
+		
+		bookService.delete(b_id);
+		
+		return "redirect:/";
 	}
 }
 

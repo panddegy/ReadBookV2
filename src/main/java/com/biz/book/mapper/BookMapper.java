@@ -18,13 +18,13 @@ public interface BookMapper {
 	public BookVO findByID(long b_id);
 	
 	@Insert(" insert into tbl_books_v2 values(seq_book_v2.nextval, #{b_auth}, #{b_pass}, #{b_date}, #{b_time}, "
-			+ " #{b_subject}, #{b_text}, #{b_file} ) ")
+			+ " #{b_subject,jdbcType=NVARCHAR}, #{b_text,jdbcType=NVARCHAR}, #{b_file,jdbcType=NVARCHAR} ) ")
 	public int insert(BookVO bookVO);
 	
 	@Update(" update tbl_books_v2 set b_text=#{b_text} where b_id=#{b_id} ")
 	public int update(BookVO bookVO);
 	
 	@Delete(" delete from tbl_books_v2 where b_id=#{b_id} ")
-	public int delete(String b_id);
+	public int delete(long b_id);
 	
 }

@@ -41,7 +41,7 @@ $(function(){
 	<%@include file="/WEB-INF/views/bodies/book_list.jspf" %>
 </c:if>
 <c:if test="${BODY=='UPDATE'}">
-	<%@include file="/WEB-INF/views/bodies/update_form.jspf" %>
+	<%@include file="/WEB-INF/views/bodies/write_form.jspf" %>
 </c:if>
 </section>
 <div class="btn-wrapper">

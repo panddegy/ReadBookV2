@@ -1,5 +1,7 @@
 package com.biz.book.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +23,6 @@ public class BookVO {
     private String b_subject;
     private String b_text;
     private String b_file;
+    private MultipartFile b_realfile;
     
 }

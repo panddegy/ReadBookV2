@@ -54,25 +54,31 @@ input[type="file"]{
 
 </style>
 <script>
-
+$(function(){
+	$("#btn-delete").click(function(){
+		let b_id=$("#b_id").val()
+		location.href="${rootpath}/delete?b_id="+b_id
+	})
+})
 </script>
 <div class="form-wrapper">
-<form:form modelAttribute="bookFormVO" enctype="multipart/form-data" autocomplete="off">
-	<p class="sub-title">Write Book</p>
+<form:form modelAttribute="bookVO" enctype="multipart/form-data" autocomplete="off">
+	<p class="sub-title">${SUBTITLE}</p>
+	<form:hidden path="b_id" />
 	<div class="input-wrapper">
-	<form:input class="book-input" placeholder="Input your name" path="f_auth" />
+	<form:input class="book-input" placeholder="Input your name" path="b_auth" />
 	</div>
 	<div class="input-wrapper">
-	<form:password class="book-input" placeholder="Input your password" path="f_pass" />
+	<form:password class="book-input" placeholder="Input your password" path="b_pass" />
 	</div>
 	<div class="input-wrapper">
-	<form:input class="book-input" placeholder="Input book`s title" path="f_subject" />
+	<form:input class="book-input" placeholder="Input book`s title" path="b_subject" />
 	</div>
 	<div class="input-wrapper">
-	<form:textarea rows="10" class="book-input" placeholder="Input your comment" path="f_text" />
+	<form:textarea rows="10" class="book-input" placeholder="Input your comment" path="b_text" />
 	</div>
 	<div class="input-wrapper">
-	<form:input class="book-input-file" type="file" path="f_file"/>
+	<form:input class="book-input-file" type="file" path="b_realfile"/>
 	</div>
 </form:form>
 </div>

@@ -27,43 +27,41 @@ public class BookService {
 	@Autowired
 	ServletContext servletContext;
 
-	public int insert(BookFormVO bookFormVO, MultipartHttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
-		BookVO bookVO=new BookVO();
-		
-		MultipartFile multipartFile=request.getFile("f_file");
+	public String uploadFile(MultipartFile multipartFile) {
 		
 		String realPath=servletContext.getRealPath("/files/");
 		String saveName=UUID.randomUUID()+multipartFile.getOriginalFilename();
 		
 		File dir=new File(realPath);
-		if(!dir.exists()) {
-			dir.mkdir();
-		} else {
-			File file=new File(realPath, saveName);
-			try {
-				multipartFile.transferTo(file);
-			} catch (IllegalStateException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		if(!dir.exists()) dir.mkdir();
+		
+		File file=new File(realPath, saveName);
+		try {
+			multipartFile.transferTo(file);
+			return saveName;
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
+		return null;
+	}
+	
+	public int insert(BookVO bookVO, MultipartHttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+		MultipartFile multipartFile=request.getFile("b_realfile");
+		if(multipartFile!=null) {
+			bookVO.setB_file(this.uploadFile(multipartFile));
+		}
 		SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sd=new SimpleDateFormat("HH:mm:ss");
 		Date d=new Date();
 		String today = sf.format(d);
 		String time = sd.format(d);
 		
-		bookVO.setB_auth(bookFormVO.getF_auth());
-		bookVO.setB_pass(bookFormVO.getF_pass());
 		bookVO.setB_date(today);
 		bookVO.setB_time(time);
-		bookVO.setB_subject(bookFormVO.getF_subject());
-		bookVO.setB_text(bookFormVO.getF_text());
-		bookVO.setB_file(saveName);
-		
 		
 		return bookMapper.insert(bookVO);
 	}
@@ -81,7 +79,25 @@ public class BookService {
 	public BookVO mainPage() {
 		
 		List<BookVO> bookList=bookMapper.selectAll();
+		
 		return bookList.get(0);
+	}
+
+	public int update(BookVO bookVO, MultipartHttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+		if(bookVO.getB_realfile()!=null) {
+			MultipartFile multipartFile=request.getFile("b_realfile");
+			bookVO.setB_file(this.uploadFile(multipartFile));
+		}
+		
+		return bookMapper.update(bookVO);
+	}
+
+	public int delete(long b_id) {
+		// TODO Auto-generated method stub
+		
+		return bookMapper.delete(b_id);
 	}
 	
 }
