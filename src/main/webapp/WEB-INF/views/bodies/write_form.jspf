@@ -1,0 +1,88 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<style>
+form{
+	width: 500px;
+	background-color: rgba(0,0,0,0.3);
+	margin: 0 auto;
+	font-size: 20px;
+}
+input{
+	font-size: 15px;
+}
+textarea{
+	font-size: 15px;
+}
+.form-wrapper{
+	display: flex;
+	flex-direction: column;
+	width: 1024px;
+	height: 650px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	justify-content: center;
+	text-align: center;
+	background-image: url(resources/write_img.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	
+}
+.input-wrapper{
+	display: flex;
+	flex-direction: row;
+	margin: 10px;
+	padding: 8px 16px;
+	text-align: center;
+}
+.book-input{
+	width: 400px;
+	padding: 8px 16px;
+}
+.book-input-file{
+	width: 400px;
+}
+.sub-title{
+	font-size: 25px;
+	font-style: italic;
+	color: white;
+}
+input[type="file"]{
+	color: white;
+}
+
+</style>
+<script>
+
+</script>
+<div class="form-wrapper">
+<form:form modelAttribute="bookFormVO" enctype="multipart/form-data" autocomplete="off">
+	<p class="sub-title">Write Book</p>
+	<div class="input-wrapper">
+	<form:input class="book-input" placeholder="Input your name" path="f_auth" />
+	</div>
+	<div class="input-wrapper">
+	<form:password class="book-input" placeholder="Input your password" path="f_pass" />
+	</div>
+	<div class="input-wrapper">
+	<form:input class="book-input" placeholder="Input book`s title" path="f_subject" />
+	</div>
+	<div class="input-wrapper">
+	<form:textarea rows="10" class="book-input" placeholder="Input your comment" path="f_text" />
+	</div>
+	<div class="input-wrapper">
+	<form:input class="book-input-file" type="file" path="f_file"/>
+	</div>
+</form:form>
+</div>
+
+
+
+
+
+
+
+
+
+
